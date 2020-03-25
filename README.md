@@ -1,6 +1,6 @@
 <img src="./frontend/src/omnistackweek.jpeg">
 
-#Be The Hero (W.I.P)
+# Be The Hero (W.I.P)
   
   
 A brand new project of OmniStack Week #11 from [Rocketseat](http://rocketseat.com.br)
