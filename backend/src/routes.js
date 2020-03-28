@@ -1,22 +1,40 @@
 const express = require('express');
 
 const OngController = require('./controllers/OngController')
-const incidentController = require('./controllers/incidentController')
+const IncidentController = require('./controllers/IncidentController')
 const ProfileController = require('./controllers/ProfileController')
 const SessionController = require('./controllers/SessionController')
 
+const {
+  validLogIn,
+  validOngCreate,
+  validOngProfile,
+  validIncidentsListPage,
+  validIncidentsCreate,
+  validIncidentsDelete
+} = require('./utils/routeValidations');
+
 const routes = express.Router();
 
-routes.post('/sessions', SessionController.create);
+// Create a new ONG
+routes.post('/ongs', validOngCreate(), OngController.create);
 
-routes.get('/ongs', OngController.index);  
-routes.post('/ongs', OngController.create);
+// List ALL ONGs
+routes.get('/ongs', OngController.index);
 
-routes.get('/profile', ProfileController.index);
+// Log In ONG Profile
+routes.post('/sessions', validLogIn(), SessionController.create);
 
-routes.get('/incidents', incidentController.index);
-routes.post('/incidents', incidentController.create);
-routes.delete('/incidents/:id', incidentController.delete);
+// Create Incidents
+routes.post('/incidents', validIncidentsCreate() , IncidentController.create);
 
+// List ONGs Profile Incidents 
+routes.get('/profile', validOngProfile(), ProfileController.index);
+
+// List ALL Incidents (by page)
+routes.get('/incidents', validIncidentsListPage() , IncidentController.index);
+
+// Delete Incidents
+routes.delete('/incidents/:id', validIncidentsDelete() , IncidentController.delete);
 
 module.exports = routes; 
